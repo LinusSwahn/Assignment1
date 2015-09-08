@@ -85,8 +85,8 @@ public class Dit948Calculator {
     private String infixToRPN(String infix){
 
         //Declare two strings, output and tmp.
-        String output = "";
-        String tmp = "";
+        String output = "351*";
+        String tmp = "*+((";
 
 
         //Loops through all chars in the String supplied.
@@ -109,39 +109,39 @@ public class Dit948Calculator {
             //If the char is a left paranthesis, push it to tmp
             if (n == CharEvaluator.LEFTPARENTHESIS)
             {
-                tmp += c;
+                tmp = c+tmp;
                 continue;
             }
 
             if (n == CharEvaluator.RIGHTPARENTHESIS)
             {
-                for(int z = tmp.length()-1; z>=0; z--)
+                for(int z = 0; z < tmp.length() ; z++)
                 {
                     if(tmp.charAt(z)=='(')
                     {
-                        tmp = tmp.substring(0, z);
+
+                        tmp = tmp.replace(tmp.substring(0, z + 1), "");
                         break;
                     }
 
                     output+=tmp.charAt(z);
+                    //tmp = tmp.replace(tmp.substring(0,z+1),"");
 
-                    tmp = tmp.substring(0, z);
                 }
-
             }
 
             if (n == CharEvaluator.OPERATOR)
             {
                 if(tmp.length() == 0) {
-                    tmp += c;
+                    tmp = c+tmp;
                     continue;
                 }
 
-                for(int z = tmp.length()-1; z >= 0; z--)
+                for(int z = 0; z < tmp.length() ; z++)
                 {
                     if(tmp.charAt(z)=='(')
                     {
-                        tmp += c;
+                        tmp = c+tmp;
                         break;
                     }
 
@@ -155,46 +155,28 @@ public class Dit948Calculator {
 
                             output+=tmp.charAt(z);
 
-                            tmp = tmp.substring(0, z);
+                            tmp = tmp.replace(tmp.substring(0,z+1),"");
 
                         }
                         else {
-                            tmp += c;
+                            tmp = c+tmp;
                             break;
                         }
 
                     }
 
-                    if(x == CharEvaluator.NUMERIC || x == CharEvaluator.RIGHTPARENTHESIS)
-                    {
-                        output+=tmp.charAt(z);
-
-                        tmp = tmp.substring(0, z);
-                    }
-
                     if(tmp.length() == 0){
-                        tmp += c;
+                        tmp = c+tmp;
                         break;
                     }
-
-
-
-
-
-
                 }
             }
-
-
         }
 
-        for(int z = tmp.length()-1; z>=0; z--)
+        for(int z = 0; z < tmp.length() ; z++)
         {
-
-
             output+=tmp.charAt(z);
-
-            tmp = tmp.substring(0, z);
+            tmp = tmp.replace(tmp.substring(0,z+1),"");
         }
 
 
