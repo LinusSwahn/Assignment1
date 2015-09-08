@@ -85,13 +85,15 @@ public class Dit948Calculator {
     private String infixToRPN(String infix){
 
         //Declare two strings, output and tmp.
-        String output = "351*";
-        String tmp = "*+((";
+        String output = "";
+        String tmp = "";
 
 
         //Loops through all chars in the String supplied.
         for(int i = 0; i<infix.length(); i++) {
 
+
+            //System.out.println(tmp);
             //Stores the value of the current char in the loop to c.
             char c = infix.charAt(i);
 
@@ -117,21 +119,31 @@ public class Dit948Calculator {
             {
                 for(int z = 0; z < tmp.length() ; z++)
                 {
+
                     if(tmp.charAt(z)=='(')
                     {
 
-                        tmp = tmp.replace(tmp.substring(0, z + 1), "");
+                        if(tmp.length() > 1) tmp = tmp.substring(1);
+                        else tmp = "";
+
+                       // System.out.println(tmp);
                         break;
                     }
 
                     output+=tmp.charAt(z);
-                    //tmp = tmp.replace(tmp.substring(0,z+1),"");
 
+                    if(tmp.length() > 1) tmp = tmp.substring(1);
+                    else tmp = "";
+
+
+
+                    z = -1;
                 }
             }
 
             if (n == CharEvaluator.OPERATOR)
             {
+
                 if(tmp.length() == 0) {
                     tmp = c+tmp;
                     continue;
@@ -155,7 +167,10 @@ public class Dit948Calculator {
 
                             output+=tmp.charAt(z);
 
-                            tmp = tmp.replace(tmp.substring(0,z+1),"");
+                            if(tmp.length() > 1) tmp = tmp.substring(1);
+                            else tmp = "";
+                            z = -1;
+
 
                         }
                         else {
@@ -172,15 +187,14 @@ public class Dit948Calculator {
                 }
             }
         }
-
+        //System.out.println(tmp);
         for(int z = 0; z < tmp.length() ; z++)
         {
             output+=tmp.charAt(z);
-            tmp = tmp.replace(tmp.substring(0,z+1),"");
+            if(tmp.length() > 1) tmp = tmp.substring(1);
+            else tmp = "";
+            z = -1;
         }
-
-
-
         return output;
     }
 
