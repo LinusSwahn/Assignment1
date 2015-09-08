@@ -78,7 +78,8 @@ public class Dit948Calculator {
     private String infixToRPN(String infix){
 
         //Declare two strings, output and tmp.
-        String output, tmp;
+        String output = "";
+        String tmp = "";
 
 
         //Loops through all chars in the String supplied.
@@ -98,18 +99,21 @@ public class Dit948Calculator {
             }
 
 
-            if (n == CharEvaluator.OPERATOR)
-            {
-                //tmp += c;
-                //continue;
-            }
+
 
             //If the char is a left paranthesis, push
             if (n == CharEvaluator.LEFTPARENTHESIS)
             {
+                tmp += c;
+                continue;
+            }
+
+            if (n == CharEvaluator.RIGHTPARENTHESIS)
+            {
 
             }
-            if (n == CharEvaluator.RIGHTPARENTHESIS)
+
+            if (n == CharEvaluator.OPERATOR)
             {
 
             }
