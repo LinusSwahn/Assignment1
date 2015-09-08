@@ -153,10 +153,10 @@ Transfer the remaining elements in tmp to output.
 
         // creating a new Calculator object for user to interact with
         Dit948Calculator calculator = new Dit948Calculator();
+        // displayUi returns false if user chooses not to continue
         if(!calculator.displayUi()) System.exit(0);
         // query user for arithmetic expression
         System.out.printf("\n\nPlease enter an arithmetic expression to evaluate:\n");
-
 
 
     }
