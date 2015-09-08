@@ -88,6 +88,7 @@ public class Dit948Calculator {
             //Stores the value of the current char in the loop to c.
             char c = infix.charAt(i);
 
+
             //Evaluates c to see which kind it is of.
             int n = CharEvaluator.evaluateChar(c);
 
@@ -98,10 +99,7 @@ public class Dit948Calculator {
                 continue;
             }
 
-
-
-
-            //If the char is a left paranthesis, push
+            //If the char is a left paranthesis, push it to tmp
             if (n == CharEvaluator.LEFTPARENTHESIS)
             {
                 tmp += c;
@@ -110,6 +108,18 @@ public class Dit948Calculator {
 
             if (n == CharEvaluator.RIGHTPARENTHESIS)
             {
+                for(int z = tmp.length()-1; z>=0; z--)
+                {
+                    if(tmp.charAt(z)=='(')
+                    {
+                        tmp = tmp.substring(0, z);
+                        break;
+                    }
+
+                    output+=tmp.charAt(z);
+
+                    tmp = tmp.substring(0, z);
+                }
 
             }
 
