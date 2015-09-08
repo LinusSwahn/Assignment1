@@ -5,26 +5,29 @@ import java.util.Scanner;
 /**
  * Created by pontuspohl on 07/09/15.
  */
+
+// Class that holds the core functionality of this program
 public class Dit948Calculator {
+
+    private final int _NUMROWS = 9;
 
    public Dit948Calculator(){
 
+       //Call DisplayUi in constructor
        displayUi();
-
-
    }
 
-    private boolean displayUi(){
+    // Building the UI and checking if user wants to continue
+    private void displayUi(){
 
-        for(int i = 0; i < 9; i++){
+        // algorithm for building the UI
+        for(int i = 0; i < _NUMROWS ; i++){
             if(i % 2 == 0)
-
             {
                 switch (i){
                     case 0: System.out.printf("+***************************************+\n");
                         break;
-                    case 2 :
-                        System.out.printf("*                                       *\n");
+                    case 2: System.out.printf("*                                       *\n");
                         break;
                     case 4: System.out.printf("*     Welcome to DIT948 Calculator      *\n");
                         break;
@@ -33,19 +36,28 @@ public class Dit948Calculator {
                     case 8: System.out.printf("+***************************************+\n");
                         break;
                 }
-
             }
             else System.out.printf("\n");
         }
 
+        // Query user for input
         System.out.printf("\n\nPress \"E\" to exit or any other button to continue");
+
+        // Creating Scanner obj using Input stream
         Scanner scanner = new Scanner(System.in);
+
+        // store user input in String variable next
         String next = scanner.next();
+
+        // exit program if user inputs 'e' or 'E'
         if(next.equalsIgnoreCase("e")) System.exit(0);
+
+        // for debugging only
         System.out.println("continuing");
-        return true;
+
     }
 
+    // method to determine the value of an operator
     private int p(char operator){
 
         // check if argument is valid and return correct value
@@ -64,6 +76,20 @@ public class Dit948Calculator {
     }
 
     // TODO: logic ((3 + 5 ∗ 1)/8) ∗ 14 to RPN |||| and RPN -> result;
+
+    private double evalRPN(String rpn){
+
+
+    }
+
+    private String infixToRPN(){
+
+
+
+    }
+
+
+
 
 
     /*
@@ -87,6 +113,8 @@ Transfer the remaining elements in tmp to output.
 
     public static void main(String args[]){
 
+
+        // creating a new Calculator object for user to interact with
         Dit948Calculator calculator = new Dit948Calculator();
         System.out.println(calculator.p('*'));
     }
