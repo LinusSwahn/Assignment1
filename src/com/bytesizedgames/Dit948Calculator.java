@@ -11,14 +11,10 @@ public class Dit948Calculator {
 
     private final int _NUMROWS = 9;
 
-   public Dit948Calculator(){
-
-       //Call DisplayUi in constructor
-       displayUi();
-   }
+   public Dit948Calculator(){}
 
     // Building the UI and checking if user wants to continue
-    private void displayUi(){
+    private boolean displayUi(){
 
         // algorithm for building the UI
         for(int i = 0; i < _NUMROWS ; i++){
@@ -41,7 +37,7 @@ public class Dit948Calculator {
         }
 
         // Query user for input
-        System.out.printf("\n\nPress \"E\" to exit or any other button to continue");
+        System.out.printf("\n\nPress \"E\" to exit or any other button to continue\n");
 
         // Creating Scanner obj using Input stream
         Scanner scanner = new Scanner(System.in);
@@ -50,10 +46,12 @@ public class Dit948Calculator {
         String next = scanner.next();
 
         // exit program if user inputs 'e' or 'E'
-        if(next.equalsIgnoreCase("e")) System.exit(0);
+        if(next.equalsIgnoreCase("e")) return false;
 
         // for debugging only
         System.out.println("continuing");
+
+        return true;
 
     }
 
@@ -77,16 +75,18 @@ public class Dit948Calculator {
 
     // TODO: logic ((3 + 5 ∗ 1)/8) ∗ 14 to RPN |||| and RPN -> result;
 
+    private String infixToRPN(String infix){
+
+
+        return"";
+    }
+
     private double evalRPN(String rpn){
 
-
+    return 0;
     }
 
-    private String infixToRPN(){
 
-
-
-    }
 
 
 
@@ -116,6 +116,11 @@ Transfer the remaining elements in tmp to output.
 
         // creating a new Calculator object for user to interact with
         Dit948Calculator calculator = new Dit948Calculator();
-        System.out.println(calculator.p('*'));
+        if(!calculator.displayUi()) System.exit(0);
+        // query user for arithmetic expression
+        System.out.printf("\n\nPlease enter an arithmetic expression to evaluate:\n");
+
+
+
     }
 }
