@@ -88,28 +88,28 @@ public class Dit948Calculator {
             char c = infix.charAt(i);
 
             //Evaluates c to see which kind it is of.
-            int n = charEvaluator.evaluateChar(c);
+            int n = CharEvaluator.evaluateChar(c);
 
             //If the char is numeric push to the output string.
-            if (n == charEvaluator.ISNUMERIC)
+            if (n == CharEvaluator.NUMERIC)
             {
                 output += c;
                 continue;
             }
 
 
-            if (n == charEval.ISOPERATOR)
+            if (n == CharEvaluator.OPERATOR)
             {
                 //tmp += c;
                 //continue;
             }
 
             //If the char is a left paranthesis, push
-            if (n == charEvaluator.ISLEFTPARANTHESIS)
+            if (n == CharEvaluator.LEFTPARENTHESIS)
             {
 
             }
-            if (n == charEvaluator.ISRIGHTPARANTHESIS)
+            if (n == CharEvaluator.RIGHTPARENTHESIS)
             {
 
             }
