@@ -125,11 +125,56 @@ public class Dit948Calculator {
 
             if (n == CharEvaluator.OPERATOR)
             {
+                if(tmp.length() == 0) tmp += c;
 
+                for(int z = tmp.length()-1; z>=0; z--)
+                {
+                    if(tmp.charAt(z)=='(')
+                    {
+                        tmp += c;
+                        break;
+                    }
+
+
+                    int x = CharEvaluator.evaluateChar(tmp.charAt(z));
+
+                    if(x == CharEvaluator.OPERATOR) {
+
+                        if(p(tmp.charAt(z)) >= p(c)) {
+
+                            output+=tmp.charAt(z);
+
+                            tmp = tmp.substring(0, z);
+                        }
+                        else {
+                            tmp += c;
+                            break;
+                        }
+
+                    }
+
+
+                    output+=tmp.charAt(z);
+
+                    tmp = tmp.substring(0, z);
+                }
             }
 
+
         }
-        return"";
+
+        for(int z = tmp.length()-1; z>=0; z--)
+        {
+
+
+            output+=tmp.charAt(z);
+
+            tmp = tmp.substring(0, z);
+        }
+
+
+
+        return output;
     }
 
     private double evalRPN(String rpn){
