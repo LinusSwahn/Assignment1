@@ -11,6 +11,13 @@ public class Dit948Calculator {
 
     private final int _NUMROWS = 9;
 
+
+   public static void getInput(){
+
+
+
+   }
+
    public Dit948Calculator(){}
 
     // Building the UI and checking if user wants to continue
@@ -125,9 +132,12 @@ public class Dit948Calculator {
 
             if (n == CharEvaluator.OPERATOR)
             {
-                if(tmp.length() == 0) tmp += c;
+                if(tmp.length() == 0) {
+                    tmp += c;
+                    continue;
+                }
 
-                for(int z = tmp.length()-1; z>=0; z--)
+                for(int z = tmp.length()-1; z >= 0; z--)
                 {
                     if(tmp.charAt(z)=='(')
                     {
@@ -179,6 +189,17 @@ public class Dit948Calculator {
 
     private double evalRPN(String rpn){
 
+        String tmp2 = "";
+
+        for(int i = 0; i< rpn.length(); i++)
+        {
+        int n = CharEvaluator.evaluateChar(rpn.charAt(i));
+        if( n == CharEvaluator.NUMERIC ) tmp2 += rpn.charAt(i);
+        else if(n == CharEvaluator.OPERATOR)
+
+
+        }
+
     return 0;
     }
 
@@ -216,6 +237,17 @@ Transfer the remaining elements in tmp to output.
         if(!calculator.displayUi()) System.exit(0);
         // query user for arithmetic expression
         System.out.printf("\n\nPlease enter an arithmetic expression to evaluate:\n");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        System.out.println(input);
+        String result = calculator.infixToRPN(input);
+        System.out.println(result);
+
+        Double newResult = calculator.evalRPN(result);
+
+
+
+
 
 
     }
