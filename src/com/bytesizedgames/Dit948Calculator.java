@@ -148,13 +148,15 @@ public class Dit948Calculator {
 
                     int x = CharEvaluator.evaluateChar(tmp.charAt(z));
 
-                    if(x == CharEvaluator.OPERATOR) {
+                    if(x == CharEvaluator.OPERATOR)
+                    {
 
                         if(p(tmp.charAt(z)) >= p(c)) {
 
                             output+=tmp.charAt(z);
 
                             tmp = tmp.substring(0, z);
+
                         }
                         else {
                             tmp += c;
@@ -163,10 +165,23 @@ public class Dit948Calculator {
 
                     }
 
+                    if(x == CharEvaluator.NUMERIC || x == CharEvaluator.RIGHTPARENTHESIS)
+                    {
+                        output+=tmp.charAt(z);
 
-                    output+=tmp.charAt(z);
+                        tmp = tmp.substring(0, z);
+                    }
 
-                    tmp = tmp.substring(0, z);
+                    if(tmp.length() == 0){
+                        tmp += c;
+                        break;
+                    }
+
+
+
+
+
+
                 }
             }
 
@@ -195,7 +210,7 @@ public class Dit948Calculator {
         {
         int n = CharEvaluator.evaluateChar(rpn.charAt(i));
         if( n == CharEvaluator.NUMERIC ) tmp2 += rpn.charAt(i);
-        else if(n == CharEvaluator.OPERATOR)
+        else if(n == CharEvaluator.OPERATOR) ;
 
 
         }
