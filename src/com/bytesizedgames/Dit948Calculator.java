@@ -77,7 +77,44 @@ public class Dit948Calculator {
 
     private String infixToRPN(String infix){
 
+        //Declare two strings, output and tmp.
+        String output, tmp;
 
+
+        //Loops through all chars in the String supplied.
+        for(int i = 0; i<infix.length(); i++) {
+
+            //Stores the value of the current char in the loop to c.
+            char c = infix.charAt(i);
+
+            //Evaluates c to see which kind it is of.
+            int n = charEvaluator.evaluateChar(c);
+
+            //If the char is numeric push to the output string.
+            if (n == charEvaluator.ISNUMERIC)
+            {
+                output += c;
+                continue;
+            }
+
+
+            if (n == charEval.ISOPERATOR)
+            {
+                //tmp += c;
+                //continue;
+            }
+
+            //If the char is a left paranthesis, push
+            if (n == charEvaluator.ISLEFTPARANTHESIS)
+            {
+
+            }
+            if (n == charEvaluator.ISRIGHTPARANTHESIS)
+            {
+
+            }
+
+        }
         return"";
     }
 
