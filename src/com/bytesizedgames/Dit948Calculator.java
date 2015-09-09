@@ -3,7 +3,7 @@ package com.bytesizedgames;
 import java.util.Scanner;
 
 /**
- * Created by Pontus Pohl and Linus Eiderström Swahnon 07/09/15.
+ * Created by Pontus Pohl and Linus Eiderström Swahn 07/09/15.
  */
 
 // Class that holds the core functionality of this program
@@ -156,7 +156,6 @@ public class Dit948Calculator {
 
         return arrayToReturn;
     }
-
 
     private String infixToRPN(String infix){
 
