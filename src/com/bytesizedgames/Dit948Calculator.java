@@ -155,7 +155,7 @@ public class Dit948Calculator {
     private String infixToRPN(String infix){
 
         //Declare two strings, output and tmp.
-        String output = "";
+        String output[] = new String[0];
         String tmp = "";
         String[] outputArray = computeArrayLength(infix);
         char bufferedChar = ' ';
@@ -164,7 +164,7 @@ public class Dit948Calculator {
         for(int i = 0; i<outputArray.length; i++) {
 
 
-
+            String
             int typeOfChar = CharEvaluator.evaluateChar(bufferedChar);
 
 
@@ -178,7 +178,12 @@ public class Dit948Calculator {
             //If the char is numeric push to the output string.
             if (n == CharEvaluator.NUMERIC)
             {
-                output += c;
+                String tmpArray[] = new String[output.length+1];
+                for(int j = 0; j<output.length; j++)
+                {
+                    tmpArray[j] = output[j];
+                }
+                tmpArray[tmpArray.length-1] = "" + ;
                 continue;
             }
 
