@@ -3,7 +3,7 @@ package com.bytesizedgames;
 import java.util.Scanner;
 
 /**
- * Created by Pontus Pohl and Linus Eiderström Swahnon 07/09/15.
+ * Created by Pontus Pohl and Linus Eiderström Swahn 07/09/15.
  */
 
 // Class that holds the core functionality of this program
@@ -23,25 +23,20 @@ public class Dit948Calculator {
     // Building the UI and checking if user wants to continue
     private boolean displayUi(){
 
+        int titleRow = (int)(0.5*(_NUMROWS));
+        System.out.println(titleRow);
         // algorithm for building the UI
-        for(int i = 0; i < _NUMROWS ; i++){
-            if(i % 2 == 0)
-            {
-                switch (i){
-                    case 0: System.out.printf("+***************************************+\n");
-                        break;
-                    case 2: System.out.printf("*                                       *\n");
-                        break;
-                    case 4: System.out.printf("*     Welcome to DIT948 Calculator      *\n");
-                        break;
-                    case 6: System.out.printf("*                                       *\n");
-                        break;
-                    case 8: System.out.printf("+***************************************+\n");
-                        break;
-                }
+
+        for(int i = 0; i < _NUMROWS ; i++) {
+            if (i % 2 != 0 && i != titleRow && i != _NUMROWS - 1) {
+                System.out.printf("*                                       *\n");
             }
-            else System.out.printf("\n");
+            else if (i == 0) System.out.printf("+***************************************+\n");
+            else if (i == titleRow) System.out.printf("*     Welcome to DIT948 Calculator      *\n");
+            else if (i == (_NUMROWS - 1)) System.out.printf("+***************************************+\n");
         }
+
+
 
 
         // Query user for input
@@ -384,24 +379,25 @@ public class Dit948Calculator {
 
     public static void main(String args[]){
 
-
+/*
         String testArray[] = new String[] {"5", "9", "*", "2", "62", "/", "89", "90", "8", "/", "+", "*", "+"};
 
         Dit948Calculator calculator = new Dit948Calculator();
-        String array[] = calculator.computeArrayLength("((3+5*1*22)/82)*14+(2+23)");
+        String array[] = calculator.computeArrayLength("((3+5*1*22)/(82+3))*14+(2+23)");
         for(int i=0;i<array.length;i++){
             System.out.printf("index %d holds String: %s \n",i,array[i]);
         }
+*/
 
 
 
 
-        /*
         // creating a new Calculator object for user to interact with
         Dit948Calculator calculator = new Dit948Calculator();
         // displayUi returns false if user chooses not to continue
         if(!calculator.displayUi()) System.exit(0);
         // query user for arithmetic expression
+        /*
         System.out.printf("\n\nPlease enter an arithmetic expression to evaluate:\n");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
