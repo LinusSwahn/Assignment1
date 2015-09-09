@@ -112,7 +112,7 @@ public class Dit948Calculator {
             arrayToReturn[i] ="";
         }
 
-        System.out.println("Length of array to produce is : "+count);
+
         int arrayCounter= 0;
         newChar = -1;
         oldChar = -1;
@@ -129,24 +129,29 @@ public class Dit948Calculator {
             {
 
                 arrayToReturn[arrayCounter] += str.charAt(i);
-                System.out.println("arrayToReturn index: "+arrayCounter+" Contains: "+arrayToReturn[arrayCounter]);
+                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
                 buff = str.charAt(i);
                 continue;
             }
             else if(newChar == CharEvaluator.NUMERIC){
                 arrayCounter++;
+
                 arrayToReturn[arrayCounter] += str.charAt(i);
-                str.charAt(i);
-                System.out.println("arrayToReturn index: " + arrayCounter + " Contains: " + arrayToReturn[arrayCounter]);
+                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
+
+                buff = str.charAt(i);
                 continue;
             }
-            else {
-
-                arrayCounter++;
-
+            else if( newChar != CharEvaluator.NUMERIC && i == 0 ){
                 arrayToReturn[arrayCounter] += str.charAt(i);
+                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
                 buff=str.charAt(i);
-                System.out.println("arrayToReturn index: "+arrayCounter+" Contains: "+arrayToReturn[arrayCounter]);
+            }
+            else{
+                arrayCounter++;
+                arrayToReturn[arrayCounter] += str.charAt(i);
+                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
+                buff=str.charAt(i);
             }
 
 
@@ -344,10 +349,12 @@ Transfer the remaining elements in tmp to output.
 
 
         Dit948Calculator calculator = new Dit948Calculator();
-        String array[] = calculator.computeArrayLength("22*2+3*(2+2)*15");
+        String array[] = calculator.computeArrayLength("((3+5*1*22)/82)*14+(2+23)");
         for(int i=0;i<array.length;i++){
             System.out.printf("index %d holds String: %s \n",i,array[i]);
         }
+
+
 
 
         /*
