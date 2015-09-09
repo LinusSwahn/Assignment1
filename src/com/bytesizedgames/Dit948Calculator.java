@@ -158,15 +158,16 @@ public class Dit948Calculator {
         String output[] = new String[0];
         String tmp = "";
         String[] outputArray = computeArrayLength(infix);
-        char bufferedChar = ' ';
+        //char bufferedChar = ' ';
 
         //Loops through all chars in the String supplied.
         for(int i = 0; i<outputArray.length; i++) {
 
 
+
             String tmpString = outputArray[i];
 
-            int typeOfChar = CharEvaluator.evaluateChar(bufferedChar);
+
 
             //Stores the value of the current char in the loop to c.
             char c = tmpString.charAt(0);
@@ -178,11 +179,13 @@ public class Dit948Calculator {
             if (n == CharEvaluator.NUMERIC)
             {
                 String tmpArray[] = new String[output.length+1];
+                tmpArray = clearArray(tmpArray);
                 for(int j = 0; j<output.length; j++)
                 {
                     tmpArray[j] = output[j];
                 }
                 tmpArray[tmpArray.length-1] = tmpString;
+                output = tmpArray;
                 continue;
             }
 
@@ -212,12 +215,13 @@ public class Dit948Calculator {
 
                     //Transfer the char to output.
                     String tmpArray[] = new String[output.length+1];
+                    tmpArray = clearArray(tmpArray);
                     for(int j = 0; j<output.length; j++)
                     {
                         tmpArray[j] = output[j];
                     }
-                    tmpArray[tmpArray.length-1] = "" + tmp.charAt(z);
-
+                    tmpArray[tmpArray.length-1] += tmp.charAt(z);
+                    output = tmpArray;
                     //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
                     if(tmp.length() > 1) tmp = tmp.substring(1);
                     //Else just set the tmp string to "".
@@ -253,11 +257,13 @@ public class Dit948Calculator {
 
                             //Transfer the char to output.
                             String tmpArray[] = new String[output.length+1];
+                            tmpArray = clearArray(tmpArray);
                             for(int j = 0; j<output.length; j++)
                             {
                                 tmpArray[j] = output[j];
                             }
-                            tmpArray[tmpArray.length-1] = "" + tmp.charAt(z);
+                            tmpArray[tmpArray.length-1] += tmp.charAt(z);
+                            output = tmpArray;
 
                             //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
                             if(tmp.length() > 1) tmp = tmp.substring(1);
@@ -283,7 +289,7 @@ public class Dit948Calculator {
             }
 
 
-            bufferedChar = infix.charAt(i);
+
 
         }
 
@@ -292,11 +298,13 @@ public class Dit948Calculator {
         {
             //Transfer the char to output.
             String tmpArray[] = new String[output.length+1];
+            tmpArray = clearArray(tmpArray);
             for(int j = 0; j<output.length; j++)
             {
                 tmpArray[j] = output[j];
             }
-            tmpArray[tmpArray.length-1] = "" + tmp.charAt(z);
+            tmpArray[tmpArray.length-1] += tmp.charAt(z);
+            output = tmpArray;
             //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
             if(tmp.length() > 1) tmp = tmp.substring(1);
             //Else just set the tmp string to "".
@@ -397,40 +405,47 @@ public class Dit948Calculator {
         return Double.parseDouble(tmp2[0]);
     }
 
+    private String[] clearArray(String array[]){
+
+
+
+        for(int i = 0; i < array.length; i++ ){
+            array[i] ="";
+        }
+        return array;
+    }
+
     public static void main(String args[]){
 
-/*
-        String testArray[] = new String[] {"5", "9", "*", "2", "62", "/", "89", "90", "8", "/", "+", "*", "+"};
 
-        Dit948Calculator calculator = new Dit948Calculator();
-        String array[] = calculator.computeArrayLength("((3+5*1*22)/(82+3))*14+(2+23)");
-        for(int i=0;i<array.length;i++){
-            System.out.printf("index %d holds String: %s \n",i,array[i]);
-        }
-*/
 
 
 
 
         // creating a new Calculator object for user to interact with
         Dit948Calculator calculator = new Dit948Calculator();
+
         // displayUi returns false if user chooses not to continue
         if(!calculator.displayUi()) System.exit(0);
         // query user for arithmetic expression
-        /*
+
         System.out.printf("\n\nPlease enter an arithmetic expression to evaluate:\n");
+
         Scanner scanner = new Scanner(System.in);
+
         String input = scanner.nextLine();
+
         System.out.println(input);
-        String result = calculator.infixToRPN(input);
-        System.out.println(result);
 
-        Double newResult = calculator.evalRPN(result);
-        */
+        String array[] = calculator.infixToRPN(input);
 
+        for(int i = 0; i < array.length; i++)
+        {
+            System.out.printf("%s ",array[i]);
+        }
+        System.out.println("");
+        Double result = calculator.evalRPN(array);
 
-
-
-
+        System.out.println("Result is : "+result);
     }
 }
