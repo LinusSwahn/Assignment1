@@ -84,15 +84,18 @@ public class Dit948Calculator {
     // TODO: logic ((3 + 5 ∗ 1)/8) ∗ 14 to RPN |||| and RPN -> result;
 
 
-    private int computeArrayLength(String str){
+    private String[] computeArrayLength(String str){
 
         char buff = ' ';
         int count = 0;
+        int newChar = -1;
+        int oldChar = -1;
+
 
         for(int i = 0;i < str.length(); i++)
         {
-            int newChar = CharEvaluator.evaluateChar(str.charAt(i));
-            int oldChar = CharEvaluator.evaluateChar(buff);
+            newChar = CharEvaluator.evaluateChar(str.charAt(i));
+            oldChar = CharEvaluator.evaluateChar(buff);
             if(newChar == CharEvaluator.NUMERIC && oldChar == CharEvaluator.NUMERIC ){
                 buff = str.charAt(i);
                 continue;
@@ -101,7 +104,55 @@ public class Dit948Calculator {
             count++;
         }
 
-            return count;
+        buff = ' ';
+
+        String arrayToReturn[] = new String[count];
+
+        for(int i = 0; i < arrayToReturn.length; i++ ){
+            arrayToReturn[i] ="";
+        }
+
+        System.out.println("Length of array to produce is : "+count);
+        int arrayCounter= 0;
+        newChar = -1;
+        oldChar = -1;
+        buff = ' ';
+
+
+
+        for(int i = 0; i < str.length(); i++)
+        {
+            newChar = CharEvaluator.evaluateChar(str.charAt(i));
+            oldChar = CharEvaluator.evaluateChar(buff);
+            if(newChar == CharEvaluator.NUMERIC && oldChar == CharEvaluator.NUMERIC
+                    || newChar == CharEvaluator.NUMERIC && i == 0)
+            {
+
+                arrayToReturn[arrayCounter] += str.charAt(i);
+                System.out.println("arrayToReturn index: "+arrayCounter+" Contains: "+arrayToReturn[arrayCounter]);
+                buff = str.charAt(i);
+                continue;
+            }
+            else if(newChar == CharEvaluator.NUMERIC){
+                arrayCounter++;
+                arrayToReturn[arrayCounter] += str.charAt(i);
+                str.charAt(i);
+                System.out.println("arrayToReturn index: " + arrayCounter + " Contains: " + arrayToReturn[arrayCounter]);
+                continue;
+            }
+            else {
+
+                arrayCounter++;
+
+                arrayToReturn[arrayCounter] += str.charAt(i);
+                buff=str.charAt(i);
+                System.out.println("arrayToReturn index: "+arrayCounter+" Contains: "+arrayToReturn[arrayCounter]);
+            }
+
+
+        }
+
+        return arrayToReturn;
     }
 
 
@@ -110,6 +161,7 @@ public class Dit948Calculator {
         //Declare two strings, output and tmp.
         String output = "";
         String tmp = "";
+        String[] outputArray = computeArrayLength(infix);
         char bufferedChar = ' ';
 
 
@@ -118,16 +170,16 @@ public class Dit948Calculator {
 
 
         //Loops through all chars in the String supplied.
-        for(int i = 0; i<infix.length(); i++) {
+        for(int i = 0; i<outputArray.length; i++) {
 
 
 
             int typeOfChar = CharEvaluator.evaluateChar(bufferedChar);
 
-            //System.out.println(tmp);
+
             //Stores the value of the current char in the loop to c.
             char c = infix.charAt(i);
-            bufferedChar = infix.charAt(i);
+
 
             //Evaluates c to see which kind it is of.
             int n = CharEvaluator.evaluateChar(c);
@@ -223,6 +275,10 @@ public class Dit948Calculator {
                     tmp = c+tmp;
                 }
             }
+
+
+            bufferedChar = infix.charAt(i);
+
         }
 
         //When we have looped through all the chars in the input. Transfer and pop the last elements from tmp to output.
@@ -288,8 +344,10 @@ Transfer the remaining elements in tmp to output.
 
 
         Dit948Calculator calculator = new Dit948Calculator();
-        int x = calculator.computeArrayLength("2*1*3*2*5");
-        System.out.println(x);
+        String array[] = calculator.computeArrayLength("22*2+3*(2+2)*15");
+        for(int i=0;i<array.length;i++){
+            System.out.printf("index %d holds String: %s \n",i,array[i]);
+        }
 
 
         /*
