@@ -242,53 +242,101 @@ public class Dit948Calculator {
         return output;
     }
 
-    private double evalRPN(String rpn){
+    private double evalRPN(String rpn[]){
 
-        String tmp2 = "";
+        //Declare a temporary array to store values.
+        String tmp2[] = new String[0];
 
-        for(int i = 0; i< rpn.length(); i++)
+        //Loop through all elements in rpn[].
+        for(int i = 0; i< rpn.length; i++)
         {
-        int n = CharEvaluator.evaluateChar(rpn.charAt(i));
-        if( n == CharEvaluator.NUMERIC ) tmp2 += rpn.charAt(i);
-        else if(n == CharEvaluator.OPERATOR) ;
 
+            //Evaluate the element we are currently at.
+            int n = CharEvaluator.evaluateChar(rpn[i].charAt(0));
 
+            //If it's numerical Push to tmp2.
+            if( n == CharEvaluator.NUMERIC )
+            {
+                //Create a tmpArray to store of values and the push the new value to the top.
+                String tmpArray[] = new String[tmp2.length+1];
+
+                //Transfers the values from tmp2.
+                for(int j = 1; j<tmpArray.length; j++)
+                {
+                    tmpArray[j] = tmp2[j-1];
+                }
+
+                //Push the new value to the top of the stack.
+                tmpArray[0] = rpn[i];
+
+                //Replace tmp2 with the updated array.
+                tmp2 = tmpArray;
+            }
+
+            //If we are at an operator, apply the operator to the top two elements in tmp2.
+            else if(n == CharEvaluator.OPERATOR)
+            {
+                //Store the operator as a char.
+                char c = rpn[i].charAt(0);
+
+                //Create a tmpArray with length one lower than tmp2 since we will pop it.
+                String tmpArray[] = new String[tmp2.length-1];
+
+                //Temporary double variable to store the calculated value.
+                double tmpDouble = 0;
+
+                //Check which operator it is. Apply the correct calculation depending on operator.
+                switch(c) {
+                    case '+':
+
+                        tmpDouble = Double.parseDouble(tmp2[1]) + Double.parseDouble(tmp2[0]);
+
+                        break;
+
+                    case '-':
+
+                        tmpDouble = Double.parseDouble(tmp2[1]) - Double.parseDouble(tmp2[0]);
+
+                        break;
+                    case '*':
+
+                        tmpDouble = Double.parseDouble(tmp2[1]) * Double.parseDouble(tmp2[0]);
+
+                        break;
+                    case '/':
+
+                        tmpDouble = Double.parseDouble(tmp2[1]) / Double.parseDouble(tmp2[0]);
+
+                        break;
+
+                }
+
+                //Push the new value into the stack.
+                tmpArray[0] = "" + tmpDouble;
+
+                //Transfer the other elemtns of the stack to the new temporary array.
+                for(int j = 2; j<tmp2.length; j++)
+                {
+                    tmpArray[j-1] = tmp2[j];
+                }
+
+                //Replace tmp2 with the new updated array.
+                tmp2 = tmpArray;
+            }
         }
 
-    return 0;
+        //Return the calculated value.
+        return Double.parseDouble(tmp2[0]);
     }
-
-
-
-
-
-
-
-    /*
-    for i=1 to m
-if c_i is an operand: Transfer c_i to output.
-if c_i is a left parentheses: Push c_i to tmp.
-if c_i is a right parentheses: Pop elements from tmp and transfer
-them to output until a left-parentheses
-is met. Pop left-parentheses.
-if c_i is an operator: Let the top tmp element be t. Pop and
-transfer elements from tmp to output
-until:
-p(t) < p(c_i) or
-t is a left-parentheses or
-tmp is empty.
-Push c_i to tmp.
-Transfer the remaining elements in tmp to output.
-     */
-
-
 
     public static void main(String args[]){
 
 
+        String testArray[] = new String[] {"5", "9", "*", "2", "62", "/", "89", "90", "8", "/", "+", "*", "+"};
 
         Dit948Calculator calculator = new Dit948Calculator();
-        int x = calculator.computeArrayLength("2*1*3*2*5");
+        double x = calculator.evalRPN(testArray);
+
         System.out.println(x);
 
 
