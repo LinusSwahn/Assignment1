@@ -43,6 +43,7 @@ public class Dit948Calculator {
             else System.out.printf("\n");
         }
 
+
         // Query user for input
         System.out.printf("\n\nPress \"E\" to exit or any other button to continue\n");
 
@@ -82,21 +83,51 @@ public class Dit948Calculator {
 
     // TODO: logic ((3 + 5 ∗ 1)/8) ∗ 14 to RPN |||| and RPN -> result;
 
+
+    private int computeArrayLength(String str){
+
+        char buff = ' ';
+        int count = 0;
+
+        for(int i = 0;i < str.length(); i++)
+        {
+            int newChar = CharEvaluator.evaluateChar(str.charAt(i));
+            int oldChar = CharEvaluator.evaluateChar(buff);
+            if(newChar == CharEvaluator.NUMERIC && oldChar == CharEvaluator.NUMERIC ){
+                buff = str.charAt(i);
+                continue;
+            }
+            buff = str.charAt(i);
+            count++;
+        }
+
+            return count;
+    }
+
+
     private String infixToRPN(String infix){
 
         //Declare two strings, output and tmp.
         String output = "";
         String tmp = "";
+        char bufferedChar = ' ';
+
+
+
+
 
 
         //Loops through all chars in the String supplied.
         for(int i = 0; i<infix.length(); i++) {
 
 
+
+            int typeOfChar = CharEvaluator.evaluateChar(bufferedChar);
+
             //System.out.println(tmp);
             //Stores the value of the current char in the loop to c.
             char c = infix.charAt(i);
-
+            bufferedChar = infix.charAt(i);
 
             //Evaluates c to see which kind it is of.
             int n = CharEvaluator.evaluateChar(c);
@@ -255,6 +286,13 @@ Transfer the remaining elements in tmp to output.
     public static void main(String args[]){
 
 
+
+        Dit948Calculator calculator = new Dit948Calculator();
+        int x = calculator.computeArrayLength("2*1*3*2*5");
+        System.out.println(x);
+
+
+        /*
         // creating a new Calculator object for user to interact with
         Dit948Calculator calculator = new Dit948Calculator();
         // displayUi returns false if user chooses not to continue
@@ -268,7 +306,7 @@ Transfer the remaining elements in tmp to output.
         System.out.println(result);
 
         Double newResult = calculator.evalRPN(result);
-
+        */
 
 
 
