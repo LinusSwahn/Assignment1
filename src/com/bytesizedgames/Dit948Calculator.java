@@ -9,7 +9,7 @@ import java.util.Scanner;
 // Class that holds the core functionality of this program
 public class Dit948Calculator {
 
-    private final int _NUMROWS = 9;
+    private final int _NUMROWS = 20;
 
 
    public static void getInput(){
@@ -25,8 +25,8 @@ public class Dit948Calculator {
 
         int titleRow = (int)(0.5*(_NUMROWS));
         System.out.println(titleRow);
-        // algorithm for building the UI
 
+        // algorithm for building the UI
         for(int i = 0; i < _NUMROWS ; i++) {
             if (i % 2 != 0 && i != titleRow && i != _NUMROWS - 1) {
                 System.out.printf("*                                       *\n");
@@ -170,7 +170,7 @@ public class Dit948Calculator {
 
 
             //Stores the value of the current char in the loop to c.
-            char c = infix.charAt(i);
+            char c = outputArray[i].charAt(0);
 
 
             //Evaluates c to see which kind it is of.
