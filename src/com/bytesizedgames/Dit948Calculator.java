@@ -3,7 +3,7 @@ package com.bytesizedgames;
 import java.util.Scanner;
 
 /**
- * Created by pontuspohl on 07/09/15.
+ * Created by Pontus Pohl and Linus Eiderström Swahnon 07/09/15.
  */
 
 // Class that holds the core functionality of this program
@@ -80,9 +80,6 @@ public class Dit948Calculator {
         return -1;
 
     }
-
-    // TODO: logic ((3 + 5 ∗ 1)/8) ∗ 14 to RPN |||| and RPN -> result;
-
 
     private String[] computeArrayLength(String str){
 
@@ -163,11 +160,6 @@ public class Dit948Calculator {
         String tmp = "";
         String[] outputArray = computeArrayLength(infix);
         char bufferedChar = ' ';
-
-
-
-
-
 
         //Loops through all chars in the String supplied.
         for(int i = 0; i<outputArray.length; i++) {
