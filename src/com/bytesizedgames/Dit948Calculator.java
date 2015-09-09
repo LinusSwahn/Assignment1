@@ -146,42 +146,43 @@ public class Dit948Calculator {
                 continue;
             }
 
+            //If the char is a right paranthesis, loop through all chars in tmp until a left paranthesis is met.
             if (n == CharEvaluator.RIGHTPARENTHESIS)
             {
                 for(int z = 0; z < tmp.length() ; z++)
                 {
-
+                    //If we encounter a left paranthesis. Pop it from tmp and break out from the loop.
                     if(tmp.charAt(z)=='(')
                     {
-
+                        //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
                         if(tmp.length() > 1) tmp = tmp.substring(1);
+                        //Else just set the tmp string to "".
                         else tmp = "";
 
                        // System.out.println(tmp);
                         break;
                     }
 
+                    //Transfer the char to output.
                     output+=tmp.charAt(z);
 
+                    //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
                     if(tmp.length() > 1) tmp = tmp.substring(1);
+                    //Else just set the tmp string to "".
                     else tmp = "";
 
 
-
+                    //Reset z so it will point at index 0 next itereation.
                     z = -1;
                 }
             }
 
+            //If the char is an operator. Loop through tmp until on of the three conditions is met. If met, push to tmp.
             if (n == CharEvaluator.OPERATOR)
             {
-
-                if(tmp.length() == 0) {
-                    tmp = c+tmp;
-                    continue;
-                }
-
                 for(int z = 0; z < tmp.length() ; z++)
                 {
+                    //Condition 1: We encounter a left paranthesis.
                     if(tmp.charAt(z)=='(')
                     {
                         tmp = c+tmp;
@@ -189,43 +190,55 @@ public class Dit948Calculator {
                     }
 
 
+                    //Extra security check to see if current character in tmp is an operator.
                     int x = CharEvaluator.evaluateChar(tmp.charAt(z));
 
                     if(x == CharEvaluator.OPERATOR)
                     {
 
+                        //If p(t)>=p(c) we should transfer character t from tmp to output and pop it.
                         if(p(tmp.charAt(z)) >= p(c)) {
 
                             output+=tmp.charAt(z);
 
+                            //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
                             if(tmp.length() > 1) tmp = tmp.substring(1);
+                            //Else just set the tmp string to "".
                             else tmp = "";
+
+                            //Reset z so it will point at index 0 next iteration.
                             z = -1;
 
-
                         }
+                        //Condition 2: p(t)<p(c)
                         else {
                             tmp = c+tmp;
                             break;
                         }
 
                     }
-
-                    if(tmp.length() == 0){
-                        tmp = c+tmp;
-                        break;
-                    }
+                }
+                //Condition 3: tmp is empty.
+                if(tmp.length() == 0) {
+                    tmp = c+tmp;
                 }
             }
         }
-        //System.out.println(tmp);
+
+        //When we have looped through all the chars in the input. Transfer and pop the last elements from tmp to output.
         for(int z = 0; z < tmp.length() ; z++)
         {
             output+=tmp.charAt(z);
+            //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
             if(tmp.length() > 1) tmp = tmp.substring(1);
+            //Else just set the tmp string to "".
             else tmp = "";
+
+            //Reset z so it will point at index 0 next iteration.
             z = -1;
         }
+
+        //Return the output, now correctly formatted to RPN.
         return output;
     }
 
