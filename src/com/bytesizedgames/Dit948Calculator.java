@@ -152,7 +152,7 @@ public class Dit948Calculator {
         return arrayToReturn;
     }
 
-    private String infixToRPN(String infix){
+    private String[] infixToRPN(String infix){
 
         //Declare two strings, output and tmp.
         String output[] = new String[0];
@@ -164,13 +164,12 @@ public class Dit948Calculator {
         for(int i = 0; i<outputArray.length; i++) {
 
 
-            String
+            String tmpString = outputArray[i];
+
             int typeOfChar = CharEvaluator.evaluateChar(bufferedChar);
 
-
             //Stores the value of the current char in the loop to c.
-            char c = outputArray[i].charAt(0);
-
+            char c = tmpString.charAt(0);
 
             //Evaluates c to see which kind it is of.
             int n = CharEvaluator.evaluateChar(c);
@@ -183,7 +182,7 @@ public class Dit948Calculator {
                 {
                     tmpArray[j] = output[j];
                 }
-                tmpArray[tmpArray.length-1] = "" + ;
+                tmpArray[tmpArray.length-1] = tmpString;
                 continue;
             }
 
@@ -212,7 +211,12 @@ public class Dit948Calculator {
                     }
 
                     //Transfer the char to output.
-                    output+=tmp.charAt(z);
+                    String tmpArray[] = new String[output.length+1];
+                    for(int j = 0; j<output.length; j++)
+                    {
+                        tmpArray[j] = output[j];
+                    }
+                    tmpArray[tmpArray.length-1] = "" + tmp.charAt(z);
 
                     //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
                     if(tmp.length() > 1) tmp = tmp.substring(1);
@@ -247,7 +251,13 @@ public class Dit948Calculator {
                         //If p(t)>=p(c) we should transfer character t from tmp to output and pop it.
                         if(p(tmp.charAt(z)) >= p(c)) {
 
-                            output+=tmp.charAt(z);
+                            //Transfer the char to output.
+                            String tmpArray[] = new String[output.length+1];
+                            for(int j = 0; j<output.length; j++)
+                            {
+                                tmpArray[j] = output[j];
+                            }
+                            tmpArray[tmpArray.length-1] = "" + tmp.charAt(z);
 
                             //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
                             if(tmp.length() > 1) tmp = tmp.substring(1);
@@ -280,7 +290,13 @@ public class Dit948Calculator {
         //When we have looped through all the chars in the input. Transfer and pop the last elements from tmp to output.
         for(int z = 0; z < tmp.length() ; z++)
         {
-            output+=tmp.charAt(z);
+            //Transfer the char to output.
+            String tmpArray[] = new String[output.length+1];
+            for(int j = 0; j<output.length; j++)
+            {
+                tmpArray[j] = output[j];
+            }
+            tmpArray[tmpArray.length-1] = "" + tmp.charAt(z);
             //as long as the length of tmp is >1 replace tmp with a new substring of tmp with the first element popped.
             if(tmp.length() > 1) tmp = tmp.substring(1);
             //Else just set the tmp string to "".
