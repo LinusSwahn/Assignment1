@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Created by Pontus Pohl and Linus Eiderström Swahn 07/09/15.
  */
 
-// Class that holds the core functionality of this program
+
 interface Calculator {
 
     String[] infixToRPN(String infix);
@@ -14,11 +14,13 @@ interface Calculator {
     String getUserInput();
     double evalRPN(String rpn[]);
     boolean displayUi();
+
 }
 
+// Class that holds the core functionality of this program
 public class Dit948Calculator implements Calculator {
 
-    private final int _NUMROWS = 20;
+    private final int _NUMROWS = 9;
     private Scanner keyboard = new Scanner(System.in);
 
 
@@ -30,7 +32,7 @@ public class Dit948Calculator implements Calculator {
     public boolean displayUi(){
 
         int titleRow = (int)(0.5*(_NUMROWS));
-        System.out.println(titleRow);
+
 
         // algorithm for building the UI
         for(int i = 0; i < _NUMROWS ; i++) {
@@ -57,8 +59,7 @@ public class Dit948Calculator implements Calculator {
         // exit program if user inputs 'e' or 'E'
         if(next.equalsIgnoreCase("e")) return false;
 
-        // for debugging only
-        System.out.println("continuing");
+
 
         return true;
 
@@ -430,7 +431,7 @@ public class Dit948Calculator implements Calculator {
         try{
             if(expression.length() == 0) throw new Exception("\nYou have to Supply at least one char" +
                     "(Preferably more than one though).\n\nif you did enter" +
-                    " > 0 chars, then we have an IOExeption... \n\nTry again or press e to exit!\n");
+                    " > 0 chars, then we have an IOException... \n\nTry again or press e to exit!\n");
 
             else if(expression.length() == 1 && expression.equalsIgnoreCase("e")) System.exit(0);
 
@@ -439,7 +440,7 @@ public class Dit948Calculator implements Calculator {
                 if(CharEvaluator.evaluateChar(expression.charAt(i)) == CharEvaluator.ILLEGALTYPE )
                 {
                     throw new Exception("\nYou entered an invalid Arithmetic Expression," +
-                            "Please try again or press e to exit!\n");
+                            " Please try again or press e to exit!\n");
                 }
             }
         }
@@ -482,6 +483,7 @@ public class Dit948Calculator implements Calculator {
 
 
             // create a new Calculator object for user to interact with
+            // using Interface keeps private fields/methods private
             Calculator calculator = new Dit948Calculator();
 
             // displayUi returns false if user chooses not to continue
