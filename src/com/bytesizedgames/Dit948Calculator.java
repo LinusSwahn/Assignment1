@@ -7,16 +7,27 @@ import java.util.Scanner;
  */
 
 // Class that holds the core functionality of this program
-public class Dit948Calculator {
+interface Calculator {
+
+    String[] infixToRPN(String infix);
+    boolean validateExpression(String expression);
+    String getUserInput();
+    double evalRPN(String rpn[]);
+    boolean displayUi();
+}
+
+public class Dit948Calculator implements Calculator {
 
     private final int _NUMROWS = 20;
     private Scanner keyboard = new Scanner(System.in);
 
 
-   public Dit948Calculator(){}
+
+
+    public Dit948Calculator(){}
 
     // Building the UI and checking if user wants to continue
-    private boolean displayUi(){
+    public boolean displayUi(){
 
         int titleRow = (int)(0.5*(_NUMROWS));
         System.out.println(titleRow);
@@ -146,7 +157,7 @@ public class Dit948Calculator {
         return arrayToReturn;
     }
 
-    private String[] infixToRPN(String infix){
+    public String[] infixToRPN(String infix){
 
         //Declare two strings, output and tmp.
         String output[] = new String[0];
@@ -312,7 +323,7 @@ public class Dit948Calculator {
         return output;
     }
 
-    private double evalRPN(String rpn[]){
+    public double evalRPN(String rpn[]){
 
         //Declare a temporary array to store values.
         String tmp2[] = new String[0];
@@ -413,7 +424,7 @@ public class Dit948Calculator {
         return array;
     }
 
-    private boolean validateExpression(String expression)
+    public boolean validateExpression(String expression)
     {
 
         try{
@@ -434,13 +445,15 @@ public class Dit948Calculator {
         }
         catch(Exception e)
         {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
+
+
             return false;
         }
         return true;
     }
 
-    private String getUserInput(){
+    public String getUserInput(){
 
         try{
             System.out.printf("\nPlease enter an arithmetic expression to evaluate:\n\n");
@@ -469,7 +482,7 @@ public class Dit948Calculator {
 
 
             // create a new Calculator object for user to interact with
-            Dit948Calculator calculator = new Dit948Calculator();
+            Calculator calculator = new Dit948Calculator();
 
             // displayUi returns false if user chooses not to continue
             if (!calculator.displayUi()) System.exit(0);
@@ -484,10 +497,9 @@ public class Dit948Calculator {
             do {
                 input = calculator.getUserInput();
                 hasValidInput = calculator.validateExpression(input);
-
             } while (!hasValidInput);
 
-            // perform the conversion from String input to an array with the expression in RPN
+            // perform the conversion from String input to an array that holds the expression in RPN
             String array[] = calculator.infixToRPN(input);
 
             System.out.printf("\n");
@@ -503,7 +515,7 @@ public class Dit948Calculator {
             Double result = calculator.evalRPN(array);
 
             // print out the result
-            System.out.println("\nResult is : " + result+"\n\n");
+            System.out.println("\nResult is : " + result+"\n");
 
             System.out.println("perform another conversion: y or n ?  \n");
             if(keyboard.next().equalsIgnoreCase("y")) keepGoing = true;
