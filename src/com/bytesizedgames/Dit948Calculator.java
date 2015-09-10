@@ -10,13 +10,8 @@ import java.util.Scanner;
 public class Dit948Calculator {
 
     private final int _NUMROWS = 20;
+    private Scanner keyboard = new Scanner(System.in);
 
-
-   public static void getInput(){
-
-
-
-   }
 
    public Dit948Calculator(){}
 
@@ -76,7 +71,7 @@ public class Dit948Calculator {
 
     }
 
-    private String[] computeArrayLength(String str){
+    private String[] toArray(String str){
 
         char buff = ' ';
         int count = 0;
@@ -100,9 +95,8 @@ public class Dit948Calculator {
 
         String arrayToReturn[] = new String[count];
 
-        for(int i = 0; i < arrayToReturn.length; i++ ){
-            arrayToReturn[i] ="";
-        }
+        arrayToReturn = clearArray(arrayToReturn);
+
 
 
         int arrayCounter= 0;
@@ -121,7 +115,7 @@ public class Dit948Calculator {
             {
 
                 arrayToReturn[arrayCounter] += str.charAt(i);
-                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
+
                 buff = str.charAt(i);
                 continue;
             }
@@ -129,20 +123,20 @@ public class Dit948Calculator {
                 arrayCounter++;
 
                 arrayToReturn[arrayCounter] += str.charAt(i);
-                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
+
 
                 buff = str.charAt(i);
                 continue;
             }
             else if( newChar != CharEvaluator.NUMERIC && i == 0 ){
                 arrayToReturn[arrayCounter] += str.charAt(i);
-                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
+
                 buff=str.charAt(i);
             }
             else{
                 arrayCounter++;
                 arrayToReturn[arrayCounter] += str.charAt(i);
-                System.out.println("value of arrayToReturn index: "+arrayCounter+" is: "+arrayToReturn[arrayCounter]);
+
                 buff=str.charAt(i);
             }
 
@@ -157,7 +151,7 @@ public class Dit948Calculator {
         //Declare two strings, output and tmp.
         String output[] = new String[0];
         String tmp = "";
-        String[] outputArray = computeArrayLength(infix);
+        String[] outputArray = toArray(infix);
         //char bufferedChar = ' ';
 
         //Loops through all chars in the String supplied.
@@ -333,13 +327,17 @@ public class Dit948Calculator {
             //If it's numerical Push to tmp2.
             if( n == CharEvaluator.NUMERIC )
             {
+
                 //Create a tmpArray to store of values and the push the new value to the top.
                 String tmpArray[] = new String[tmp2.length+1];
+
 
                 //Transfers the values from tmp2.
                 for(int j = 1; j<tmpArray.length; j++)
                 {
+
                     tmpArray[j] = tmp2[j-1];
+
                 }
 
                 //Push the new value to the top of the stack.
@@ -390,7 +388,7 @@ public class Dit948Calculator {
                 //Push the new value into the stack.
                 tmpArray[0] = "" + tmpDouble;
 
-                //Transfer the other elemtns of the stack to the new temporary array.
+                //Transfer the other elements of the stack to the new temporary array.
                 for(int j = 2; j<tmp2.length; j++)
                 {
                     tmpArray[j-1] = tmp2[j];
@@ -415,37 +413,102 @@ public class Dit948Calculator {
         return array;
     }
 
-    public static void main(String args[]){
+    private boolean validateExpression(String expression)
+    {
 
+        try{
+            if(expression.length() == 0) throw new Exception("\nYou have to Supply at least one char" +
+                    "(Preferably more than one though).\n\nif you did enter" +
+                    " > 0 chars, then we have an IOExeption... \n\nTry again or press e to exit!\n");
 
+            else if(expression.length() == 1 && expression.equalsIgnoreCase("e")) System.exit(0);
 
-
-
-
-        // creating a new Calculator object for user to interact with
-        Dit948Calculator calculator = new Dit948Calculator();
-
-        // displayUi returns false if user chooses not to continue
-        if(!calculator.displayUi()) System.exit(0);
-        // query user for arithmetic expression
-
-        System.out.printf("\n\nPlease enter an arithmetic expression to evaluate:\n");
-
-        Scanner scanner = new Scanner(System.in);
-
-        String input = scanner.nextLine();
-
-        System.out.println(input);
-
-        String array[] = calculator.infixToRPN(input);
-
-        for(int i = 0; i < array.length; i++)
-        {
-            System.out.printf("%s ",array[i]);
+            for(int i = 0; i<expression.length(); i++)
+            {
+                if(CharEvaluator.evaluateChar(expression.charAt(i)) == CharEvaluator.ILLEGALTYPE )
+                {
+                    throw new Exception("\nYou entered an invalid Arithmetic Expression," +
+                            "Please try again or press e to exit!\n");
+                }
+            }
         }
-        System.out.println("");
-        Double result = calculator.evalRPN(array);
+        catch(Exception e)
+        {
+            System.err.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
-        System.out.println("Result is : "+result);
+    private String getUserInput(){
+
+        try{
+            System.out.printf("\nPlease enter an arithmetic expression to evaluate:\n\n");
+
+            String input = keyboard.nextLine();
+
+            return input;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    public static void main(String args[]){
+        // self-explanatory variables...
+        boolean hasValidInput;
+        boolean keepGoing = true;
+        String input = "";
+        Scanner keyboard = new Scanner(System.in);
+
+
+
+
+
+            // create a new Calculator object for user to interact with
+            Dit948Calculator calculator = new Dit948Calculator();
+
+            // displayUi returns false if user chooses not to continue
+            if (!calculator.displayUi()) System.exit(0);
+
+
+        while(keepGoing) {
+
+            // we assume user won't perform more than one conversion
+            keepGoing = false;
+
+            // query user for arithmetic expression until a correct expression is supplied.
+            do {
+                input = calculator.getUserInput();
+                hasValidInput = calculator.validateExpression(input);
+
+            } while (!hasValidInput);
+
+            // perform the conversion from String input to an array with the expression in RPN
+            String array[] = calculator.infixToRPN(input);
+
+            System.out.printf("\n");
+            System.out.print("RPN : ");
+            // iterate through the array and print out the expression in RPN format
+            for (int i = 0; i < array.length; i++) {
+                System.out.printf("%s", array[i]);
+            }
+            // finally create a new line after RPN is printed
+            System.out.printf("\n");
+
+            // calculate the result of RPN expression
+            Double result = calculator.evalRPN(array);
+
+            // print out the result
+            System.out.println("\nResult is : " + result+"\n\n");
+
+            System.out.println("perform another conversion: y or n ?  \n");
+            if(keyboard.next().equalsIgnoreCase("y")) keepGoing = true;
+
+        }
+
     }
 }

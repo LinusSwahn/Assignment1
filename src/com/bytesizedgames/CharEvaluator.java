@@ -1,6 +1,8 @@
 package com.bytesizedgames;
 
 /**
+ * Helper Class that evaluates
+ *
  * Created by pontuspohl on 08/09/15.
  */
 public class CharEvaluator {
