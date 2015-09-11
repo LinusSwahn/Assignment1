@@ -1,6 +1,7 @@
 package com.bytesizedgames;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Pontus Pohl and Linus Eiderström Swahn 07/09/15.
@@ -435,13 +436,92 @@ public class Dit948Calculator implements Calculator {
 
             else if(expression.length() == 1 && expression.equalsIgnoreCase("e")) System.exit(0);
 
+            //Variables needed to check for illegal input strings.
+            char previousChar = ' ';
+            int leftParenthesis = 0;
+            int rightParenthesis = 0;
+
+            //loops through all chars in the input string and checks if they are illegal characters or has invalid formatting.
             for(int i = 0; i<expression.length(); i++)
             {
-                if(CharEvaluator.evaluateChar(expression.charAt(i)) == CharEvaluator.ILLEGALTYPE )
+
+                int n = CharEvaluator.evaluateChar(expression.charAt(i));
+
+                //Starts counting the brackets. If they don't match, give an exception at the end of the loop.
+                if(n == CharEvaluator.LEFTPARENTHESIS) leftParenthesis++;
+                if(n == CharEvaluator.RIGHTPARENTHESIS)
+                {
+                    rightParenthesis++;
+
+                    if(leftParenthesis==0)
+                    {
+                        throw new Exception("\nYou entered an invalid Arithmetic Expression.\n" +
+                                "A closing paranthesis can't come before an opening one!\n" +
+                                "Please try again or press e to exit!");
+                    }
+
+                    if(rightParenthesis>leftParenthesis)
+                    {
+                        throw new Exception("\nYou entered an invalid Arithmetic Expression.\n" +
+                                "You can't have more right parenthesis than left ones!\n" +
+                                "Please try again or press e to exit!");
+                    }
+                }
+
+                if(n == CharEvaluator.ILLEGALTYPE )
                 {
                     throw new Exception("\nYou entered an invalid Arithmetic Expression," +
                             " Please try again or press e to exit!\n");
                 }
+
+                if(i>0)
+                {
+                    int m = CharEvaluator.evaluateChar(previousChar);
+
+                    if(n == CharEvaluator.OPERATOR && (m == CharEvaluator.OPERATOR||m==CharEvaluator.LEFTPARENTHESIS))
+                    {
+                        throw new Exception("\nYou entered an invalid Arithmetic Expression.\n" +
+                        "Operators can't follow another operator or a left parenthesis!\n" +
+                        "Please try again or press e to exit!");
+                    }
+
+                    if(n == CharEvaluator.NUMERIC&&m==CharEvaluator.RIGHTPARENTHESIS)
+                    {
+                        throw new Exception("\nYou entered an invalid Arithmetic Expression.\n" +
+                                "Operands can't follow directly after a closing paranthesis!\n" +
+                                "Please try again or press e to exit!");
+                    }
+                }
+                else
+                {
+                    if(n==CharEvaluator.OPERATOR)
+                    {
+                        throw new Exception("\nYou entered an invalid Arithmetic Expression.\n" +
+                                "Can't start statement with an operator!\n" +
+                                "Please try again or press e to exit!");
+                    }
+
+                }
+
+                if(i==expression.length())
+                {
+                    if(n!=CharEvaluator.NUMERIC||n!=CharEvaluator.RIGHTPARENTHESIS)
+                    {
+                        System.out.println(i);
+                        throw new Exception("\nYou entered an invalid Arithmetic Expression.\n" +
+                                "You have to end statement with a closing paranthesis or and operand!\n" +
+                                "Please try again or press e to exit!");
+                    }
+                }
+
+                previousChar = expression.charAt(i);
+            }
+
+            if(leftParenthesis!=rightParenthesis)
+            {
+                throw new Exception("\nYou entered an invalid Arithmetic Expression.\n" +
+                        "You have to have an equal amount of opening and closing parenthesis!\n" +
+                        "Please try again or press e to exit!");
             }
         }
         catch(Exception e)
